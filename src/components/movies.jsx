@@ -47,7 +47,15 @@ const Movies = () => {
               <td>{movie.numberInStock}</td>
               <td>{movie.dailyRentalRate}</td>
               <td>
-                <button onClick={() => handleLike(movie._id)}>
+                <button
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    background: "#fff",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleLike(movie._id)}
+                >
                   <Like like={movie.liked} />
                 </button>
               </td>

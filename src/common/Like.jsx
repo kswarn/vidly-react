@@ -1,8 +1,9 @@
 import React from "react";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const Like = ({ like }) => {
-  const name = like ? "f" : "nf";
-  return <h6>{name}</h6>;
+  return like ? <FavoriteIcon /> : <FavoriteBorderIcon />;
 };
 
 export default Like;
