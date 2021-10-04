@@ -3,8 +3,7 @@ import { getMovies } from "../services/fakeMovieService";
 import Like from "../common/Like";
 
 const Movies = () => {
-  const movies = getMovies();
-  const [moviesList, setMoviesList] = useState(movies);
+  const [moviesList, setMoviesList] = useState(getMovies());
 
   const handleDelete = (id) => {
     const updatedMovies = moviesList.filter((movie) => movie._id !== id);
@@ -12,7 +11,6 @@ const Movies = () => {
   };
 
   const handleLike = (id) => {
-    console.log(id);
     const updatedMovies = moviesList.filter((movie) => {
       if (movie._id === id) {
         movie.liked = !movie.liked;
@@ -47,17 +45,10 @@ const Movies = () => {
               <td>{movie.numberInStock}</td>
               <td>{movie.dailyRentalRate}</td>
               <td>
-                <button
-                  style={{
-                    border: "none",
-                    outline: "none",
-                    background: "#fff",
-                    cursor: "pointer",
-                  }}
+                <Like
                   onClick={() => handleLike(movie._id)}
-                >
-                  <Like like={movie.liked} />
-                </button>
+                  like={movie.liked}
+                />
               </td>
               <td>
                 <button
