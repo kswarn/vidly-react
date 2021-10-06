@@ -6,7 +6,10 @@ import Pagination from "../common/Pagination";
 const Movies = () => {
   const [moviesList, setMoviesList] = useState(getMovies());
 
-  const [pageSize, setPageSize] = useState(4);
+  const [paginationData, setPaginationData] = useState({
+    pageSize: 4,
+    currentPage: 1,
+  });
 
   const handleDelete = (id) => {
     const updatedMovies = moviesList.filter((movie) => movie._id !== id);
@@ -25,7 +28,7 @@ const Movies = () => {
   };
 
   const handlePageChange = (page) => {
-    console.log(page);
+    setPaginationData({ pageSize: paginationData.pageSize, currentPage: page });
   };
 
   return (
@@ -71,7 +74,8 @@ const Movies = () => {
       </table>
       <Pagination
         itemsCount={moviesList.length}
-        pageSize={pageSize}
+        pageSize={paginationData.pageSize}
+        currentPage={paginationData.currentPage}
         onPageChange={handlePageChange}
       />
     </div>
