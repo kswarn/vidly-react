@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getMovies } from "../services/fakeMovieService";
 import Like from "../common/Like";
 import Pagination from "../common/Pagination";
+import { paginate } from "../utils/paginate";
 
 const Movies = () => {
   const [moviesList, setMoviesList] = useState(getMovies());
@@ -31,6 +32,12 @@ const Movies = () => {
     setPaginationData({ pageSize: paginationData.pageSize, currentPage: page });
   };
 
+  const movies = paginate(
+    moviesList,
+    paginationData.currentPage,
+    paginationData.pageSize
+  );
+
   return (
     <div>
       <h5 className="my-5">
@@ -48,7 +55,7 @@ const Movies = () => {
           </tr>
         </thead>
         <tbody>
-          {moviesList.map((movie) => (
+          {movies.map((movie) => (
             <tr key={movie._id}>
               <td>{movie.title}</td>
               <td>{movie.genre.name}</td>
