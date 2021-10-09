@@ -47,6 +47,7 @@ const Movies = () => {
 
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
+    setPaginationData({ pageSize: 4, currentPage: 1 });
   };
 
   const filtered =
@@ -75,7 +76,7 @@ const Movies = () => {
       <Col>
         <div>
           <h5 className="my-5">
-            Showing {moviesList.length} movies from the database.
+            Showing {filtered.length} movies from the database.
           </h5>
           <table className="table">
             <thead>
