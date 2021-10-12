@@ -2,8 +2,7 @@ import React from "react";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
-const TableHeader = (props) => {
-  const { columns, sortColumn, onSort } = props;
+const TableHeader = ({ columns, sortColumn, onSort }) => {
   const raiseSort = (path) => {
     const sortColumnClone = { ...sortColumn };
     if (path === sortColumnClone.path) {
@@ -25,7 +24,11 @@ const TableHeader = (props) => {
     <thead>
       <tr>
         {columns.map((col) => (
-          <th key={col.path} onClick={() => raiseSort(col.path)}>
+          <th
+            className="clickable"
+            key={col.path}
+            onClick={() => raiseSort(col.path)}
+          >
             {col.label} {renderSortIcon(col)}
           </th>
         ))}

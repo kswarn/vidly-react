@@ -2,9 +2,7 @@ import React from "react";
 import Like from "./Like";
 import _ from "lodash";
 
-const TableBody = (props) => {
-  const { items, columns, onLike, onDelete } = props;
-
+const TableBody = ({ items, columns, onLike, onDelete }) => {
   const renderCell = (item, column) => {
     if (column.content) return column.content(item);
 

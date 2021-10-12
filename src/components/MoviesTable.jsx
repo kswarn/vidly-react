@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import TableHeader from "../common/TableHeader";
-import TableBody from "../common/TableBody";
+import Table from "../common/Table";
 import Like from "../common/Like";
 
-const MoviesTable = (props) => {
-  const { movies, onDelete, onLike, sortColumn, onSort } = props;
-
+const MoviesTable = ({ movies, onDelete, onLike, sortColumn, onSort }) => {
   const [columns, setColumns] = useState([
     { path: "title", label: "Title" },
     { path: "genre.name", label: "Genre" },
@@ -33,15 +30,14 @@ const MoviesTable = (props) => {
   ]);
 
   return (
-    <table className="table">
-      <TableHeader columns={columns} sortColumn={sortColumn} onSort={onSort} />
-      <TableBody
-        items={movies}
-        columns={columns}
-        onLike={onLike}
-        onDelete={onDelete}
-      />
-    </table>
+    <Table
+      columns={columns}
+      items={movies}
+      onSort={onSort}
+      sortColumn={sortColumn}
+      onLike={onLike}
+      onDelete={onDelete}
+    />
   );
 };
 
