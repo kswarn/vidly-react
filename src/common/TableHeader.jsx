@@ -1,4 +1,6 @@
 import React from "react";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 const TableHeader = (props) => {
   const { columns, sortColumn, onSort } = props;
@@ -13,12 +15,18 @@ const TableHeader = (props) => {
 
     onSort(sortColumnClone);
   };
+
+  const renderSortIcon = (column) => {
+    if (column.path !== sortColumn.path) return null;
+    if (sortColumn.order === "asc") return <ArrowUpwardIcon />;
+    else return <ArrowDownwardIcon />;
+  };
   return (
     <thead>
       <tr>
         {columns.map((col) => (
           <th key={col.path} onClick={() => raiseSort(col.path)}>
-            {col.label}
+            {col.label} {renderSortIcon(col)}
           </th>
         ))}
       </tr>
