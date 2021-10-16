@@ -6,6 +6,7 @@ const MovieDetails = (props) => {
   };
   return (
     <div>
+      <li></li>
       <h1>Movie Details - {props.match.params.id}</h1>
       <button className="btn btn-md btn-primary" onClick={handleSave}>
         Save

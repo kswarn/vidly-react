@@ -4,7 +4,7 @@ import Topbar from "../src/components/topbar";
 import Customers from "../src/components/customers";
 import Rentals from "../src/components/rentals";
 import NotFound from "../src/common/notfound";
-import MovieDetails from "../src/components/movieDetails";
+import MovieDetails from "./components/movieForm";
 
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -20,7 +20,7 @@ function App() {
           <Route path="/customers" component={Customers}></Route>
           <Route path="/rentals" component={Rentals}></Route>
           <Route path="/not-found" component={NotFound}></Route>
-          <Route path="/" component={Movies}></Route>
+          <Redirect from="/" to="/movies" />
           <Redirect to="/not-found" />
         </Switch>
       </div>
