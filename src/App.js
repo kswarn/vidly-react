@@ -5,7 +5,7 @@ import Customers from "../src/components/customers";
 import Rentals from "../src/components/rentals";
 import NotFound from "../src/common/notfound";
 import MovieDetails from "./components/movieForm";
-
+import LoginForm from "./components/LoginForm";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
       <div>
         {" "}
         <Switch>
+          <Route path="/login" component={LoginForm}></Route>
           <Route path="/movies/:id" component={MovieDetails}></Route>
           <Route path="/movies" component={Movies}></Route>
           <Route path="/customers" component={Customers}></Route>

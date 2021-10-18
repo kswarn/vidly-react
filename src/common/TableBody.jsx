@@ -12,15 +12,9 @@ const TableBody = ({ items, columns, onLike, onDelete }) => {
     <tbody>
       {items.map((item) => (
         <tr key={item._id}>
-          {columns.map((col) =>
-            col.path === "title" ? (
-              <td key={item._id}>
-                <Link to={`/movies/${item._id}`}>{renderCell(item, col)}</Link>
-              </td>
-            ) : (
-              <td key={item._id}>{renderCell(item, col)}</td>
-            )
-          )}
+          {columns.map((col) => (
+            <td key={item._id}>{renderCell(item, col)}</td>
+          ))}
         </tr>
       ))}
     </tbody>
