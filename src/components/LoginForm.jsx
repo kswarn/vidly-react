@@ -31,10 +31,32 @@ const LoginForm = () => {
     console.log("submitted");
   };
 
+  const validateProperty = ({ id, value }) => {
+    if (id === "username") {
+      if (value.trim() === "") return "Username is required.";
+      // ...
+    }
+
+    if (id === "password") {
+      if (value.trim() === "") return "Password is required.";
+      // ...
+    }
+  };
+
   const handleInputChange = ({ target: input }) => {
+    const errorsClone = { ...errors };
+
+    const errorMessage = validateProperty(input);
+
+    if (errorMessage) errorsClone[input.id] = errorMessage;
+    else delete errorsClone[input.id];
+
     const accountCopy = { ...account };
     accountCopy[input.id] = input.value;
+
     setAccount(accountCopy);
+
+    setErrors(errorsClone);
   };
 
   return (
