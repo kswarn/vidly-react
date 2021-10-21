@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Input from "../common/input";
 
 const LoginForm = () => {
   const [account, setAccount] = useState({
@@ -20,27 +21,19 @@ const LoginForm = () => {
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            autoFocus={true}
-            value={account.username}
-            onChange={handleInputChange}
-            type="text"
-            id="username"
-            className="form-control"
-          ></input>
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            value={account.password}
-            onChange={handleInputChange}
-            type="text"
-            className="form-control"
-          ></input>
-        </div>
+        <Input
+          name="username"
+          value={account.username}
+          label="Username"
+          onChange={handleInputChange}
+        />
+        <Input
+          name="password"
+          value={account.password}
+          label="Password"
+          onChange={handleInputChange}
+        />
+
         <button className="btn btn-primary">Login</button>
       </form>
     </div>
