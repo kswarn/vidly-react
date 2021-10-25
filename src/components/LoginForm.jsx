@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Input from "../common/input";
+import Joi from "joi-browser";
 
 const LoginForm = () => {
   const [account, setAccount] = useState({
@@ -8,15 +9,19 @@ const LoginForm = () => {
   });
   const [errors, setErrors] = useState({});
 
+  const schema = {
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().label("Password"),
+  };
+
   const validate = () => {
+    const result = Joi.validate(account, schema, { abortEarly: false });
+    if (!result.error) return null;
+
     const errors = {};
+    for (let item of result.error.details) errors[item.path[0]] = item.message;
 
-    if (account.username.trim() === "")
-      errors.username = "Username is required";
-
-    if (account.password.trim() === "")
-      errors.password = "Password is required";
-    return Object.keys(errors).length === 0 ? null : errors;
+    return errors;
   };
 
   const handleSubmit = (e) => {
