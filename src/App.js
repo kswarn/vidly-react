@@ -7,6 +7,7 @@ import NotFound from "../src/common/notfound";
 import MovieDetails from "./components/movieForm";
 import LoginForm from "./components/LoginForm";
 import { Switch, Route, Redirect } from "react-router-dom";
+import RegisterForm from "./components/RegsiterForm";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <div>
         {" "}
         <Switch>
+          <Route path="/register" component={RegisterForm}></Route>
           <Route path="/login" component={LoginForm}></Route>
           <Route path="/movies/:id" component={MovieDetails}></Route>
           <Route path="/movies" component={Movies}></Route>
