@@ -39,7 +39,7 @@ class Form extends Component {
 
     if (errors) return;
 
-    this.doSubmit();
+    this.doSubmit(e);
   };
 
   handleInputChange = ({ target: input }) => {

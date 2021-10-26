@@ -6,10 +6,11 @@ import Pagination from "../common/Pagination";
 import { paginate } from "../utils/paginate";
 import { Row, Col } from "react-bootstrap";
 import MoviesTable from "./MoviesTable";
+import { Link } from "react-router-dom";
 
 import _ from "lodash";
 
-const Movies = () => {
+const Movies = (props) => {
   const [moviesList, setMoviesList] = useState([]);
 
   const [genres, setGenres] = useState([]);
@@ -31,6 +32,10 @@ const Movies = () => {
     setMoviesList(getMovies());
     setGenres(genres);
   }, []);
+
+  const handleAddNewMovie = () => {
+    props.history.push("/movies/new/");
+  };
 
   const handleDelete = (id) => {
     const updatedMovies = moviesList.filter((movie) => movie._id !== id);
@@ -88,9 +93,12 @@ const Movies = () => {
       </Col>
       <Col>
         <div>
-          <h5 className="my-5">
+          <h5 className="my-2">
             Showing {filtered.length} movies from the database.
           </h5>
+          <Link className="btn btn-primary my-2" to="/movies/new">
+            New Movie
+          </Link>
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
