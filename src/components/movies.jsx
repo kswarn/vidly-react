@@ -27,15 +27,13 @@ const Movies = (props) => {
     order: "asc",
   });
 
+  const [searchString, setSearchString] = useState("");
+
   useEffect(() => {
     const genres = [{ _id: "", name: "All movies" }, ...getGenres()];
     setMoviesList(getMovies());
     setGenres(genres);
   }, []);
-
-  const handleAddNewMovie = () => {
-    props.history.push("/movies/new/");
-  };
 
   const handleDelete = (id) => {
     const updatedMovies = moviesList.filter((movie) => movie._id !== id);
@@ -59,11 +57,20 @@ const Movies = (props) => {
 
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
+    setSearchString("");
     setPaginationData({ pageSize: 4, currentPage: 1 });
   };
 
   const handleSort = (sortColumnClone) => {
     setSortColumn(sortColumnClone);
+  };
+
+  const handleSearch = (e) => {
+    setSearchString(e.target.value);
+
+    setSelectedGenre(null);
+
+    setPaginationData({ currentPage: 1 });
   };
 
   const filtered =
@@ -73,8 +80,14 @@ const Movies = (props) => {
 
   const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
+  const movieData =
+    searchString !== ""
+      ? sorted.filter((movie) =>
+          movie.title.toLowerCase().startsWith(searchString.toLowerCase())
+        )
+      : sorted;
   const movies = paginate(
-    sorted,
+    movieData,
     paginationData.currentPage,
     paginationData.pageSize
   );
@@ -93,12 +106,20 @@ const Movies = (props) => {
       </Col>
       <Col>
         <div>
-          <h5 className="my-2">
-            Showing {filtered.length} movies from the database.
-          </h5>
           <Link className="btn btn-primary my-2" to="/movies/new">
             New Movie
           </Link>
+          <h5 className="my-2">
+            Showing {filtered.length} movies from the database.
+          </h5>
+          <input
+            className="form-control my-3"
+            placeholder="Search"
+            type="text"
+            onChange={(e) => handleSearch(e)}
+            value={searchString}
+            id="searchString"
+          ></input>
           <MoviesTable
             movies={movies}
             sortColumn={sortColumn}
