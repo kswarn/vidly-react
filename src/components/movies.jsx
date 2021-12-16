@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getMovies } from "../services/fakeMovieService";
-import { getGenres } from "../services/fakeGenreService";
+import { getMovies, deleteMovie } from "../services/movieService";
+import { getGenres } from "../services/genreService";
 import ListGroup from "../common/ListGroup";
 import Pagination from "../common/Pagination";
 import { paginate } from "../utils/paginate";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import _ from "lodash";
 
-const Movies = (props) => {
+const Movies = () => {
   const [moviesList, setMoviesList] = useState([]);
 
   const [genres, setGenres] = useState([]);
@@ -29,18 +29,115 @@ const Movies = (props) => {
 
   const [searchString, setSearchString] = useState("");
 
+  const fakemovies = [
+    {
+      _id: "5b21ca3eeb7f6fbccd471815",
+      title: "Terminator",
+      genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+      numberInStock: 6,
+      dailyRentalRate: 2.5,
+      publishDate: "2018-01-03T19:04:28.809Z",
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd471816",
+      title: "Die Hard",
+      genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+      numberInStock: 5,
+      dailyRentalRate: 2.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd471817",
+      title: "Get Out",
+      genre: { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" },
+      numberInStock: 8,
+      dailyRentalRate: 3.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd471819",
+      title: "Trip to Italy",
+      genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+      numberInStock: 7,
+      dailyRentalRate: 3.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd47181a",
+      title: "Airplane",
+      genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+      numberInStock: 7,
+      dailyRentalRate: 3.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd47181b",
+      title: "Wedding Crashers",
+      genre: { _id: "5b21ca3eeb7f6fbccd471814", name: "Comedy" },
+      numberInStock: 7,
+      dailyRentalRate: 3.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd47181e",
+      title: "Gone Girl",
+      genre: { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" },
+      numberInStock: 7,
+      dailyRentalRate: 4.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd47181f",
+      title: "The Sixth Sense",
+      genre: { _id: "5b21ca3eeb7f6fbccd471820", name: "Thriller" },
+      numberInStock: 4,
+      dailyRentalRate: 3.5,
+      liked: false,
+    },
+    {
+      _id: "5b21ca3eeb7f6fbccd471821",
+      title: "The Avengers",
+      genre: { _id: "5b21ca3eeb7f6fbccd471818", name: "Action" },
+      numberInStock: 7,
+      dailyRentalRate: 3.5,
+      liked: false,
+    },
+  ];
+
   useEffect(() => {
-    const genres = [{ _id: "", name: "All movies" }, ...getGenres()];
-    setMoviesList(getMovies());
-    setGenres(genres);
+    getGenres()
+      .then((res) => {
+        const genres = [{ _id: "", name: "All movies" }, ...res];
+        setGenres(genres);
+      })
+      .catch((err) => console.log(err));
+
+    // setMoviesList(fakemovies);
+
+    getMovies()
+      .then((res) => {
+        setMoviesList(res);
+      })
+      .catch((err) => console.log(err));
+    console.log(moviesList, "use effect");
   }, []);
 
   const handleDelete = (id) => {
+    console.log(moviesList);
     const updatedMovies = moviesList.filter((movie) => movie._id !== id);
-    setMoviesList(updatedMovies);
+    // setMoviesList(updatedMovies);
+    console.log(updatedMovies, "updated");
+    deleteMovie(id)
+      .then((res) => console.log(res))
+      .catch((err) => {
+        console.log(err);
+        setMoviesList(moviesList);
+      });
   };
 
   const handleLike = (id) => {
+    console.log(moviesList, "like");
     const updatedMovies = moviesList.filter((movie) => {
       if (movie._id === id) {
         movie.liked = !movie.liked;
@@ -52,10 +149,12 @@ const Movies = (props) => {
   };
 
   const handlePageChange = (page) => {
+    console.log(moviesList, "");
     setPaginationData({ pageSize: paginationData.pageSize, currentPage: page });
   };
 
   const handleGenreSelect = (genre) => {
+    console.log(moviesList, "gs");
     setSelectedGenre(genre);
     setSearchString("");
     setPaginationData({ pageSize: 4, currentPage: 1 });
@@ -91,6 +190,8 @@ const Movies = (props) => {
     paginationData.currentPage,
     paginationData.pageSize
   );
+
+  console.log(moviesList, "before return");
 
   return (
     <Row>
