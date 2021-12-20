@@ -124,10 +124,8 @@ const Movies = () => {
   }, []);
 
   const handleDelete = (id) => {
-    console.log(moviesList);
     const updatedMovies = moviesList.filter((movie) => movie._id !== id);
-    // setMoviesList(updatedMovies);
-    console.log(updatedMovies, "updated");
+    setMoviesList(updatedMovies);
     deleteMovie(id)
       .then((res) => console.log(res))
       .catch((err) => {
@@ -137,7 +135,6 @@ const Movies = () => {
   };
 
   const handleLike = (id) => {
-    console.log(moviesList, "like");
     const updatedMovies = moviesList.filter((movie) => {
       if (movie._id === id) {
         movie.liked = !movie.liked;
